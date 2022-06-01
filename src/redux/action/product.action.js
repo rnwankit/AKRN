@@ -1,3 +1,4 @@
+import { getAllProduct } from '../../common/apis/product.api';
 import * as ActionTypes from '../ActionTypes';
 
 export const loadingProduct = () => (dispatch) => {
@@ -11,22 +12,27 @@ export const errorProduct = (error) => (dispatch) => {
 export const getProduct = () => (dispatch) => {
     console.log("Hello");
     try {
-        fetch('http://0.0.0.0:3004/product', {
-            method: 'GET', // or 'PUT',
-            headers: {
-                'Accept': "application/json"
-            }, 
-        })
-            .then(response => response.json())
-            .then(data => {
-                dispatch({ type: ActionTypes.GET_PRODUCT, payload: data })
-            })
-            .catch((error) => {
-                console.error('Error:', error);
-            });
+        // fetch('http://0.0.0.0:3004/product', {
+        //     method: 'GET', // or 'PUT',
+        //     headers: {
+        //         'Accept': "application/json"
+        //     }, 
+        // })
+        // getAllProduct()
+        //     .then(({data}) => {
+        //         dispatch({ type: ActionTypes.GET_PRODUCT, payload: data })
+        //     })
+        //     .catch((error) => {
+        //         console.error('Error:', error);
+        //     });
+        dispatch({type: ActionTypes.GET_PRODUCT});
     } catch (e) {
         errorProduct(e) 
     }
+}
+
+export const setProduct = (product) => (dispatch) => {
+    dispatch({type: ActionTypes.RETRIEVED_PRODUCT, payload: product.data})
 }
 
 export const deleteProduct = (id) => (dispatch) => {
