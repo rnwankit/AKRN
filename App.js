@@ -5,6 +5,7 @@ import {configStore, store} from './src/redux/store'
 import Product from './src/container/Product/Product'
 import Counter from './src/container/Counter/Counter'
 import { PersistGate } from 'redux-persist/integration/react'
+import PromiseExample from './src/container/PromiseExample/PromiseExample'
 
 export default function App() {
 const {store, persistor} = configStore();
@@ -13,8 +14,8 @@ const {store, persistor} = configStore();
       <PersistGate loading={null} persistor={persistor}>
       <View>
         <Text>App</Text>
-        <Product />
-      </View>
+          <PromiseExample />
+        </View>
       </PersistGate>
     </Provider>
   )

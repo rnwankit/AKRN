@@ -9,7 +9,7 @@ import { counterReducer } from "./reducer/counter.reducer";
 import createSagaMiddleware from 'redux-saga'
 import rootSaga from "./sagas/rootSaga";
 
-const saga = createSagaMiddleware()
+const saga = createSagaMiddleware() 
 
 const middleWares = [saga, thunk]
 
