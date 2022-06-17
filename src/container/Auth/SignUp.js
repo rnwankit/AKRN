@@ -1,5 +1,5 @@
 import React from 'react'
-import { StyleSheet, Text, TextInput, View, Button } from 'react-native'
+import { StyleSheet, Text, TextInput, View, Button, TouchableOpacity } from 'react-native'
 import auth from '@react-native-firebase/auth';
 
 
@@ -29,7 +29,7 @@ export default class SignUp extends React.Component {
 
     render() {
         return (
-            <View style={styles.container}>
+            <View>
                 <Text>Sign Up</Text>
                 {this.state.errorMessage &&
                     <Text style={{ color: 'red' }}>
@@ -50,11 +50,19 @@ export default class SignUp extends React.Component {
                     onChangeText={password => this.setState({ password })}
                     value={this.state.password}
                 />
-                <Button title="Sign Up" onPress={this.handleSignUp} />
-                <Button
-                    title="Already have an account? Login"
+                <TouchableOpacity
+                    style={styles.button}
+                    onPress={this.handleSignUp}
+                >
+                    <Text>Press Here</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                    style={styles.button}
                     onPress={() => this.props.navigation.navigate('Login')}
-                />
+                >
+                    <Text>Already have an account? Login</Text>
+                </TouchableOpacity >
+
             </View>
         )
     }
