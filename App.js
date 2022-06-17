@@ -14,7 +14,7 @@ const {store, persistor} = configStore();
       <PersistGate loading={null} persistor={persistor}>
       <View>
         <Text>App</Text>
-          <PromiseExample />
+          <Counter />
         </View>
       </PersistGate>
     </Provider>
