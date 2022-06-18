@@ -83,4 +83,4 @@ export const resetEmailPassword = () => {
                 dispatch({type: ActionTypes.AUTH_ERROR, payload: error.code});
             })
     }
-}
+} 
