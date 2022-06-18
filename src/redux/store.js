@@ -3,11 +3,11 @@ import { rootReducer } from "./reducer";
 import thunk from 'redux-thunk'
 
 import { persistStore, persistReducer } from 'redux-persist'
-import AsyncStorage from '@react-native-community/async-storage';
 import { counterReducer } from "./reducer/counter.reducer";
 
 import createSagaMiddleware from 'redux-saga'
 import rootSaga from "./sagas/rootSaga";
+import { AsyncStorage } from "react-native";
 
 const saga = createSagaMiddleware() 
 

@@ -1,75 +1,109 @@
-import React from 'react'
-import { StyleSheet, Text, TextInput, View, Button } from 'react-native'
-import auth from '@react-native-firebase/auth';
+import React, {
+  Component,
+} from 'react';
+import { useState } from 'react';
+import {
+  AppRegistry,
+  StyleSheet,
+  View,
+  StatusBar,
+  Platform,
+  SafeAreaView,
+  Text,
+  TextInput,
+  TouchableOpacity
+} from 'react-native';
+import { useDispatch } from 'react-redux';
+import { createNewUserEmail } from '../../redux/action/auth.action';
 
+const MyStatusBar = ({ backgroundColor, ...props }) => (
+  <View style={[styles.statusBar, { backgroundColor }]}>
+    <SafeAreaView>
+      <StatusBar translucent backgroundColor={backgroundColor} {...props} />
+    </SafeAreaView>
+  </View>
+);
 
-export default class SignUp extends React.Component {
-    state = { email: '', password: '', errorMessage: null }
+export default function Signup() {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
 
-    handleSignUp = () => {
-        auth()
-            .createUserWithEmailAndPassword('jane.doe@example.com', 'SuperSecretPassword!')
-            .then(() => {
-                console.log('User account created & signed in!');
-            })
-            .catch(error => {
-                if (error.code === 'auth/email-already-in-use') {
-                    console.log('That email address is already in use!');
-                }
+  const dispatch = useDispatch();
 
-                if (error.code === 'auth/invalid-email') {
-                    console.log('That email address is invalid!');
-                }
-
-                console.error(error);
-            });
-        // TODO: Firebase stuff...
-        console.log('handleSignUp')
+  const handleSignup = () => {
+    let data = {
+      email,
+      password
     }
+    dispatch(createNewUserEmail(data))
+    // console.log("ok", email, password);
+  }
 
-    render() {
-        return (
-            <View style={styles.container}>
-                <Text>Sign Up</Text>
-                {this.state.errorMessage &&
-                    <Text style={{ color: 'red' }}>
-                        {this.state.errorMessage}
-                    </Text>}
-                <TextInput
-                    placeholder="Email"
-                    autoCapitalize="none"
-                    style={styles.textInput}
-                    onChangeText={email => this.setState({ email })}
-                    value={this.state.email}
-                />
-                <TextInput
-                    secureTextEntry
-                    placeholder="Password"
-                    autoCapitalize="none"
-                    style={styles.textInput}
-                    onChangeText={password => this.setState({ password })}
-                    value={this.state.password}
-                />
-                <Button title="Sign Up" onPress={this.handleSignUp} />
-                <Button
-                    title="Already have an account? Login"
-                    onPress={() => this.props.navigation.navigate('Login')}
-                />
-            </View>
-        )
-    }
+  return (
+    <View style={styles.container}>
+      <MyStatusBar backgroundColor="#5E8D48" barStyle="light-content" />
+      <View style={styles.appBar} />
+      <View style={styles.content}>
+        <TextInput
+          onChangeText={setEmail}
+          value={email}
+          style={styles.input}
+          placeholder='Please enter email'
+        />
+        <TextInput
+          onChangeText={setPassword}
+          value={password}
+          style={styles.input}
+          placeholder='Please enter password'
+        />
+        <TouchableOpacity
+          onPress={handleSignup}
+          style={styles.button}
+        >
+          <Text>Signup</Text>
+        </TouchableOpacity>
+
+        <View>
+          <Text>Already have an account? </Text>
+          <TouchableOpacity>
+            <Text>
+              Signin
+            </Text>
+          </TouchableOpacity>
+        </View>
+      </View>
+    </View>
+  )
 }
+
+const STATUSBAR_HEIGHT = StatusBar.currentHeight;
+const APPBAR_HEIGHT = Platform.OS === 'ios' ? 44 : 56;
+
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center'
-    },
-    textInput: {
-        height: 40,
-        width: '90%',
-        borderColor: 'gray',
-        borderWidth: 1,
-        marginTop: 8
-    }
-})
+  container: {
+    flex: 1,
+  },
+  statusBar: {
+    height: STATUSBAR_HEIGHT,
+  },
+  appBar: {
+    backgroundColor: '#79B45D',
+    height: APPBAR_HEIGHT,
+  },
+  content: {
+    flex: 1,
+    //backgroundColor: '#33373B',
+  },
+  input: {
+    height: 40,
+    margin: 12,
+    borderWidth: 1,
+    padding: 10,
+  },
+  button: {
+    alignItems: "center",
+    backgroundColor: "#79B45D",
+    padding: 10,
+    margin: 12,
+  },
+});
