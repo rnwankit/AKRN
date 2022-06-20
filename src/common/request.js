@@ -1,57 +1,45 @@
-import axios, {AxiosRequestConfig} from 'axios';
+import axios from "axios"
+import { LocalHost,Home } from "../Basic";
 
-// Axios configuration, interceptors and helpers
-// https://axios-http.com/docs/instance
-// https://axios-http.com/docs/req_config
-
-export const axiosInstance = axios.create({
-    baseURL: 'http://localhost:3004',
-    timeout: 60000,
-    headers: {
-        'Access-Control-Allow-Origin': '*',
-        'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS'
-    }
+const Instance = axios.create({
+    // baseURL: LocalHost,
+    baseURL: Home,
+    timeout: 3000,
 });
 
-export function sendRequest(config) {
-    return axiosInstance.request(config);
+export const SendRequest = (config) => {
+    return Instance.request(config);
 }
 
-export function sendGetJson(path) {
-    return sendRequest({
+export const GetRequest = (path) => {
+    return SendRequest({
         url: path,
-        method: 'get'
-    });
+        method: 'GET'
+    })
 }
 
-export function sendPostJson(path, data) {
-    return sendRequest({
+export const postRequest = (path, data) => {
+    return SendRequest({
         url: path,
-        method: 'post',
+        method: "POST",
         data: JSON.stringify(data),
-        headers: {
-            'Content-Type': 'application/json'
-        }
-    });
+        headers: {'Content-Type' : 'application/json'}
+    })
 }
 
-export function sendDeleteJson(path) {
-    return sendRequest({
-        url: path,
-        method: 'DELETE', 
-        headers: {
-            'Content-Type': 'application/json'
-        }
-    });
+export const deleteRequest = (path,id) => {
+    return SendRequest({
+        url: path + id,
+        method: "DELETE"
+    })
 }
 
-export function sendPutJson(path, data) {
-    return sendRequest({
-        url: path,
-        method: 'put',
+
+export const updateProduct = (path,id,data) => {
+    return SendRequest({
+        url: path + id,
+        method: 'PUT',
         data: JSON.stringify(data),
-        headers: {
-            'Content-Type': 'application/json'
-        }
-    });
+        headers: {'Content-Type' : 'application/json'}
+    })
 }

@@ -1,57 +1,58 @@
-import * as ActionTypes from '../ActionTypes';
+import * as ActionType from '../ActionType'
 
-const initVal = {
+const initValue = {
     isLoading: false,
     product: [],
     error: ''
 }
 
-export const productReducer = (state=initVal, action) => {
-    console.log("zzzzzzzzzzz", state, action.type);
-    switch(action.type) {
-        case ActionTypes.LOADING_PRODUCT:
+export const productReducer = (state = initValue, action) => {
+    switch (action.type) {
+        case ActionType.LOADING_PRODUCT:
             return {
                 ...state,
-                product: [],
                 isLoading: true,
                 error: ''
             }
-        case ActionTypes.RETRIEVED_PRODUCT:
+        case ActionType.RETRIEVE_PRODUCT:
             return {
                 ...state,
                 product: action.payload,
                 isLoading: false,
                 error: ''
             }
-            case ActionTypes.INSERT_PRODUCT:
+        case ActionType.INSERTED_PRODUCT:
+            return {
+                ...state,
+                product: state.product.concat(action.payload),
+                isLoading: false,
+                error: ''
+            }
+        case ActionType.DELETED_PRODUCT:
+            return {
+                ...state,
+                product: state.product.filter((p) => p.id !== action.payload),
+                isLoading: false,
+                error: ''
+            }
+            case ActionType.UPDATED_PRODUCT:
+                let d = state.product.map((p) => p.id === action.payload.id ? action.payload : p);
+                console.log(d);
                 return {
                     ...state,
-                    product: state.product.concat(action.payload),
+                    product: state.product.map((p) => p.id === action.payload.id ? action.payload : p),
                     isLoading: false,
                     error: ''
                 }
-            case ActionTypes.DELETE_PRODUCT:
-                return {
-                    ...state,
-                    product: state.product.filter((p) => p.id !== action.payload),
-                    isLoading: false,
-                    error: ''
-                }
-            case ActionTypes.UPDATE_PRODUCT:
-                return {
-                    ...state,
-                    product: action.payload,
-                    isLoading: false,
-                    error: ''
-                }
-            case ActionTypes.ERROR_PRODUCT:
-                return {
-                    ...state,
-                    product: [],
-                    isLoading: false,
-                    error: action.payload
-                }
-            default: 
-                return state
+        case ActionType.ERROR_PRODUCT:
+            return {
+                ...state,
+                product: [],
+                isLoading: false,
+                error: action.payload
+            }
+        default:
+            return state
+
     }
 }

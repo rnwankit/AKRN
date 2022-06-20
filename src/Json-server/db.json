@@ -1,0 +1,115 @@
+{
+  "users": [
+    {
+      "name": "Ladva Dharmesh",
+      "email": "Ladvadharmesh03@gmail.com",
+      "password": "ladva12345",
+      "phone": "5353553434",
+      "id": 1
+    },
+    {
+      "name": "Dharmesh",
+      "email": "ladvadharmesh03@gmail.com",
+      "password": "ladva123",
+      "phone": "6353382371",
+      "id": 6
+    },
+    {
+      "name": "Dharmesh",
+      "email": "123",
+      "password": "123",
+      "phone": "6353382371",
+      "id": 6
+    }
+  ],
+  "products": [
+    {
+      "name": "Ffdgdg",
+      "detais": "Fgd",
+      "Price": "fgdgd",
+      "category": "laptop",
+      "location": "Fgg",
+      "id": 7
+    },
+    {
+      "name": "Sdad",
+      "detais": "Sdad",
+      "Price": "sdaa",
+      "category": "wearable",
+      "location": "Sdad",
+      "id": 8
+    },
+    {
+      "name": "Sdad",
+      "detais": "Sda",
+      "Price": "444444",
+      "category": "laptop",
+      "location": "Sda",
+      "id": 9
+    },
+    {
+      "name": "Fgdf",
+      "detais": "Fgd",
+      "Price": "888888",
+      "category": "wearable",
+      "location": "Fgdg",
+      "id": 10
+    },
+    {
+      "name": "F",
+      "detais": "F",
+      "Price": "5",
+      "category": "laptop",
+      "location": "F",
+      "id": 11
+    },
+    {
+      "name": "Hh",
+      "detais": "H",
+      "Price": "8",
+      "category": "wearable",
+      "location": "H",
+      "id": 12
+    },
+    {
+      "name": "Uuuu",
+      "detais": "Uuu",
+      "Price": "uuuu",
+      "category": "wearable",
+      "location": "Uuu",
+      "id": 13
+    },
+    {
+      "name": "Iii",
+      "detais": "I",
+      "Price": "i",
+      "category": "wearable",
+      "location": "I",
+      "id": 14
+    },
+    {
+      "name": "A",
+      "detais": "A",
+      "Price": "a",
+      "category": "wearable",
+      "location": "A",
+      "id": 15
+    },
+    {
+      "name": "V",
+      "detais": "V",
+      "Price": "v",
+      "category": "wearable",
+      "location": "V",
+      "id": 16
+    },
+    {
+      "name": "Q",
+      "detais": "Q",
+      "Price": "11",
+      "category": "wearable",
+      "location": "Q",
+      "id": 17
+    }
+  ]
+}

@@ -1,77 +1,167 @@
-import { getAllProduct } from '../../common/apis/product.api';
-import * as ActionTypes from '../ActionTypes';
+import { deleteProductDetails, getAllProductsDetails, GetProduct, insertProductDetails, updateProductDetails } from '../../common/apis/product.api';
+import * as ActionType from '../ActionType'
+
+// export const insertProduct = (pData) => (dispatch) => {
+//   try {
+//     dispatch(loadingProduct());
+//     // fetch('http://localhost:3004/products', {
+//       // fetch('http://192.168.43.200:8000/products', {
+//     //   // fetch('https://157.32.248.206:8000/products', {
+//     //   method: 'POST',
+//     //   headers: {
+//     //     'Content-Type': 'application/json',
+//     //   },
+//     //   body: JSON.stringify(pData),
+//     // })
+//     //   .then(response => response.json())
+//       insertProductDetails(pData)
+//         .then(data => {
+//           dispatch({ type: ActionType.INSERT_PRODUCT, payload: pData })
+//         })
+//         .catch(error => {
+//           dispatch(errorProduct(error))
+//         });
+//   } catch (e) {
+//     dispatch(errorProduct(e))
+//   }
+// }
+
+export const insertedProduct = (data) => (dispatch) => {
+  dispatch({type: ActionType.INSERTED_PRODUCT,payload: data})
+}
+export const insertProduct = (product) => (dispatch) => {
+  dispatch({type: ActionType.INSERT_PRODUCT, payload: product})
+}
+
 
 export const loadingProduct = () => (dispatch) => {
-    dispatch({ type: ActionTypes.LOADING_PRODUCT })
+  dispatch({ type: ActionType.LOADING_PRODUCT });
 }
 
 export const errorProduct = (error) => (dispatch) => {
-    dispatch({ type: ActionTypes.ERROR_PRODUCT, payload: error })
+  dispatch({ type: ActionType.ERROR_PRODUCT, payload: error })
 }
 
-export const getProduct = () => (dispatch) => {
-    console.log("Hello");
-    try {
-        // fetch('http://0.0.0.0:3004/product', {
-        //     method: 'GET', // or 'PUT',
-        //     headers: {
-        //         'Accept': "application/json"
-        //     }, 
-        // })
-        // getAllProduct()
-        //     .then(({data}) => {
-        //         dispatch({ type: ActionTypes.GET_PRODUCT, payload: data })
-        //     })
-        //     .catch((error) => {
-        //         console.error('Error:', error);
-        //     });
-        dispatch({type: ActionTypes.GET_PRODUCT});
-    } catch (e) {
-        errorProduct(e) 
-    }
+// export const fetchProduct = () => (dispatch) => {
+//   try {
+//     dispatch(loadingProduct());
+//     // // fetch('http://192.168.43.200:8000/products', {
+//     // setTimeout(
+//     //   () => {
+//     //     fetch('http://localhost:3004/products', {
+//     //       // fetch('https://157.32.248.206:8000/products', {
+//     //       method: 'GET',
+//     //     })
+//     //       .then(response => {
+//     //         if (response.ok) {
+//     //           return response.json()
+//     //         } else {
+//     //           throw new Error('Something went wrong');
+//     //         }
+//     //       })
+//     //       .then(data => {
+//     //         dispatch({ type: ActionType.GET_PRODUCT, payload: data })
+//     //       })
+//     //       .catch(error => {
+//     //         dispatch(errorProduct(error.message))
+//     //       });
+//     getAllProductsDetails()
+//         .then(({data}) => {
+//               dispatch({ type: ActionType.GET_PRODUCT, payload: data})
+//             })
+//             .catch(error => {
+//               dispatch(errorProduct(error.message))
+//             });
+          
+//       // }, 1000)
+//   } catch (error) {
+//     dispatch(errorProduct(error))
+//   }
+// };
+
+export const fetchProduct = () => (dispatch) => {
+  dispatch({type: ActionType.GET_PRODUCT})
 }
 
-export const setProduct = (product) => (dispatch) => {
-    dispatch({type: ActionTypes.RETRIEVED_PRODUCT, payload: product.data})
+export const getProduct = (product) => (dispatch) => {
+  dispatch({type: ActionType.RETRIEVE_PRODUCT, payload: product})
 }
+
+// export const deleteProduct = (id) => (dispatch) => {
+//   try {
+//     dispatch(loadingProduct());
+//     // fetch('http://192.168.43.200:8000/products', {
+//     setTimeout(
+//       () => {
+//         // fetch('http://localhost:3004/products/' + id, {
+//         //   // fetch('https://157.32.248.206:8000/products', {
+//         //   method: 'DELETE',
+//         // })
+//         //   .then(response => {
+//         //     if (response.ok) {
+//         //       return response
+//         //     } else {
+//         //       throw new Error('Something went wrong');
+//         //     }
+//         //   })
+//         deleteProductDetails(id)
+//           .then(data => {
+//             dispatch({ type: ActionType.DELETE_PRODUCT, payload: id })
+//           })
+//           .catch(error => {
+//             dispatch(errorProduct(error.message))
+//           });
+//       }, 1000)
+//   } catch (error) {
+//     dispatch(errorProduct(error))
+//   }
+// }
 
 export const deleteProduct = (id) => (dispatch) => {
-    try {
-        fetch('http://localhost:3004/product/' + id, {
-            method: 'DELETE', // or 'PUT',
-        })
-            .then(() => {
-                console.log("OKKK");
-                dispatch({ type: ActionTypes.DELETE_PRODUCT, payload: id })
-            })
-            .catch((error) => {
-                console.error('Error:', error);
-            });
-    } catch (e) {
-        errorProduct(e)
-    }
+  dispatch({ type: ActionType.DELETE_PRODUCT, payload: id })
 }
 
-export const insertData = (data) => (dispatch) => {
-    try{
-        let fData = {
-            id: Math.floor(Math.random() * 1000),
-            ...data
-        }
-        fetch('http://localhost:3004/product/', {
-            method: 'POST', // or 'PUT',
-            headers: {
-                'Content-Type': 'application/json',
-              },
-              body: JSON.stringify(fData),
-        })
-            .then(() => {
-                dispatch({ type: ActionTypes.INSERT_PRODUCT, payload: fData })
-            })
-            .catch((error) => {
-                console.error('Error:', error);
-            });
-    } catch (e) {
-        errorProduct(e)
-    }
+export const removedProduct = (data) => (dispatch) => {
+  dispatch({ type: ActionType.DELETED_PRODUCT, payload: data })
 }
+
+
+// export const updateProduct = (data) => (dispatch) => {
+//   try {
+//     dispatch(loadingProduct());
+   
+//     setTimeout(
+//       () => {
+//     // fetch('http://localhost:3004/products/' + data.id, {
+//     //   // fetch('http://192.168.43.200:8000/products', {
+//     //   // fetch('https://157.32.248.206:8000/products', {
+//     //   method: 'PUT',
+//     //   headers: {
+//     //     'Content-Type': 'application/json',
+//     //   },
+//     //   body: JSON.stringify(data),
+//     // })
+//       // .then(response => response.json())
+//       updateProductDetails(data.id,data)
+//       .then(({data}) => {
+//         console.log(data.id);
+//         dispatch({ type: ActionType.UPDATE_PRODUCT, payload: data})
+//       })
+//       .catch(error => {
+//         dispatch(errorProduct(error))
+//       });
+//     }, 1000)
+//   } catch (e) {
+//     dispatch(errorProduct(e))
+//   }
+// }
+
+
+export const updateProduct = (data) => (dispatch) => { 
+  dispatch({ type: ActionType.UPDATE_PRODUCT, payload: data})
+}
+
+export const updatedProduct = (data) => (dispatch) => { 
+  dispatch({ type: ActionType.UPDATED_PRODUCT, payload: data})
+}
+
