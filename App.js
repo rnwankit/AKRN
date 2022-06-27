@@ -6,7 +6,7 @@ import Product from './src/container/Product/Product'
 import Counter from './src/container/Counter/Counter'
 import { PersistGate } from 'redux-persist/integration/react'
 import PromiseExample from './src/container/PromiseExample/PromiseExample'
-import Signup from './src/container/Auth/Signup'
+import Signup from './src/container/Auth/SignUp'
 
 export default function App() {
 const {store, persistor} = configStore();

@@ -15,6 +15,9 @@ import {
 } from 'react-native';
 import { useDispatch } from 'react-redux';
 import { createNewUserEmail } from '../../redux/action/auth.action';
+import { GoogleSignin } from '@react-native-google-signin/google-signin';
+import auth from '@react-native-firebase/auth';
+
 
 const MyStatusBar = ({ backgroundColor, ...props }) => (
   <View style={[styles.statusBar, { backgroundColor }]}>
@@ -39,6 +42,22 @@ export default function Signup() {
     // console.log("ok", email, password);
   }
 
+  GoogleSignin.configure({
+    webClientId: '603324519381-lo8hk4vgeoc3j60jdof17ub4bl6k5jui.apps.googleusercontent.com',
+  });
+
+  const handleGoogleSignIn = async () => {
+    const { idToken } = await GoogleSignin.signIn();
+
+    // Create a Google credential with the token
+    const googleCredential = auth.GoogleAuthProvider.credential(idToken);
+
+    // Sign-in the user with the credential
+    const googleUser =  auth().signInWithCredential(googleCredential);
+
+    googleUser.then((a) => console.log(a))
+  }
+
   return (
     <View style={styles.container}>
       <MyStatusBar backgroundColor="#5E8D48" barStyle="light-content" />
@@ -61,6 +80,13 @@ export default function Signup() {
           style={styles.button}
         >
           <Text>Signup</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity
+          onPress={handleGoogleSignIn}
+          style={styles.button}
+        >
+          <Text>Signin with Google</Text>
         </TouchableOpacity>
 
         <View>
