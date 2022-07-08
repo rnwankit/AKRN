@@ -1,5 +1,5 @@
 import React, {
-  Component,
+  Component, useEffect,
 } from 'react';
 import { useState } from 'react';
 import {
@@ -17,9 +17,11 @@ import { useDispatch } from 'react-redux';
 import { createNewUserEmail } from '../../redux/action/auth.action';
 import { GoogleSignin } from '@react-native-google-signin/google-signin';
 import auth from '@react-native-firebase/auth';
+import PushNotification, { Importance } from 'react-native-push-notification';
 
 
 const MyStatusBar = ({ backgroundColor, ...props }) => (
+
   <View style={[styles.statusBar, { backgroundColor }]}>
     <SafeAreaView>
       <StatusBar translucent backgroundColor={backgroundColor} {...props} />
@@ -53,9 +55,18 @@ export default function Signup() {
     const googleCredential = auth.GoogleAuthProvider.credential(idToken);
 
     // Sign-in the user with the credential
-    const googleUser =  auth().signInWithCredential(googleCredential);
+    const googleUser = auth().signInWithCredential(googleCredential);
 
     googleUser.then((a) => console.log(a))
+  }
+
+  handleNotification = () => {
+    PushNotification.localNotification({
+      channelId: "channel-id",
+      id: '123',
+      title: 'title',
+      message: 'hi'
+    });
   }
 
   return (
@@ -87,6 +98,13 @@ export default function Signup() {
           style={styles.button}
         >
           <Text>Signin with Google</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity
+          onPress={handleNotification}
+          style={styles.button}
+        >
+          <Text>Notification</Text>
         </TouchableOpacity>
 
         <View>
