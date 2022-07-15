@@ -49,29 +49,17 @@ import React, { useEffect, useState } from 'react';
 import { Alert, Button, SafeAreaView, View } from 'react-native';
 
 const App = () => {
-  return (
-    <StripeProvider
-      publishableKey="pk_test_51LL18HSDZMLAH51NSW5hNpKXUFDKZpRZ9QZvkLYuHQOhZat6QIBdqSAzMLkZad4HBnXNFIY0MOrr5AItkA9d7GpC0020oTO0fi"
-      merchantIdentifier="merchant.identifier">
-      <SafeAreaView>
-        <StripeTest />
-      </SafeAreaView>
-    </StripeProvider>
-  );
-};
-
-const StripeTest = () => {
   const { confirmPayment } = useStripe();
 
   const [key, setKey] = useState('');
 
   useEffect(() => {
-    fetch('http://172.17.2.231:3001/payment-sheet', {
+    fetch('http://192.168.2.139:3001/create-payment-intent', {
       method: 'POST',
-      headers:{
+      headers: {
         'Accept': 'application/json',
-        'Content-Type':'application/json'
-    }
+        'Content-Type': 'application/json'
+      }
     })
       .then(res => res.json())
       .then(res => {
@@ -79,43 +67,32 @@ const StripeTest = () => {
         setKey((res.clientSecret));
       })
       .catch(e => Alert.alert("bbbb", e.message));
-
-    // var responseClone; // 1
-    // fetch('http://172.17.2.231:3001/create-payment-intent')
-    //   .then(function (response) {
-    //     responseClone = response.clone(); // 2
-    //     return response.json();
-    //   })
-    //   .then(function (data) {
-    //     // Do something with data
-    //   }, function (rejectionReason) { // 3
-    //     console.log('Error parsing JSON from response:', rejectionReason, responseClone); // 4
-    //     responseClone.text() // 5
-    //       .then(function (bodyText) {
-    //         console.log('Received the following instead of valid JSON:', bodyText); // 6
-    //       });
-    //   });
   }, []);
 
   const handleConfirmation = async () => {
     if (key) {
       const { paymentIntent, error } = await confirmPayment(key, {
-        type: 'Card',
+        paymentMethodType: 'Card',
         billingDetails: {
-          email: 'John@email.com',
+          email: 'rnwprogrammingankit@gmail.com',
         },
       });
 
       if (!error) {
         Alert.alert('Received payment', `Billed for ${paymentIntent?.amount}`);
       } else {
-        Alert.alert('Error', error.message);
+        console.log(error);;
       }
     }
   };
 
+
   return (
-    <View>
+    <StripeProvider
+      publishableKey="pk_test_51LL18HSDZMLAH51NSW5hNpKXUFDKZpRZ9QZvkLYuHQOhZat6QIBdqSAzMLkZad4HBnXNFIY0MOrr5AItkA9d7GpC0020oTO0fi"
+      merchantIdentifier="merchant.identifier">
+      <SafeAreaView>
+      <View>
       <CardField
         postalCodeEnabled={false}
         placeholder={{
@@ -139,112 +116,9 @@ const StripeTest = () => {
       />
       <Button title="Confirm payment" onPress={handleConfirmation} />
     </View>
+      </SafeAreaView>
+    </StripeProvider>
   );
 };
 
 export default App;
-
-// import React, { useState, useEffect } from "react";
-// import { StyleSheet, Button, View} from 'react-native';
-// import {
-//   CardField,
-//   CardFieldInput,
-//   useStripe,
-// } from '@stripe/stripe-react-native';
-
-// const App = () => {
-//   const [card, setCard] = useState(CardFieldInput.Details | null);
-//   const { confirmPayment, handleCardAction } = useStripe()
-//   const API_URL = "http://172.17.2.231:3001";
-//   const { initPaymentSheet, presentPaymentSheet } = useStripe();
-//   const [loading, setLoading] = useState(false);
-
-//   const fetchPaymentSheetParams = async () => {
-//     const response = await fetch(`${API_URL}/checkout`, {
-//       method: 'POST',
-//       headers: {
-//         'Content-Type': 'application/json',
-//       },
-//     });
-//     const { paymentIntent, ephemeralKey, customer } = await response.json();
-//     return {
-//       paymentIntent,
-//       ephemeralKey,
-//       customer,
-//     };
-//   };
-//   const initializePaymentSheet = async () => {
-//     const {
-//       paymentIntent,
-//       ephemeralKey,
-//       customer,
-//     } = await fetchPaymentSheetParams();
-//     const { error } = await initPaymentSheet({
-//       customerId: customer,
-//       customerEphemeralKeySecret: ephemeralKey,
-//       paymentIntentClientSecret: paymentIntent,
-//     });
-//     if (!error) {
-//       setLoading(true);
-//     }
-//   };
-//   const openPaymentSheet = async () => {
-//     const { error } = await presentPaymentSheet({ clientSecret });
-//     if (error) {
-//       Alert.alert(`Error code: ${error.code}`, error.message);
-//     } else {
-//       Alert.alert('Success', 'Your order is confirmed!');
-//     }
-//   };
-//   useEffect(() => {
-//     initializePaymentSheet();
-//   }, []);
-//   return (
-//     <View style={styles.container}>
-//       <CardField
-//         postalCodeEnabled={false}
-//         placeholder={{
-//           number: '4242 4242 4242 4242',
-//         }}
-//         cardStyle={{
-//           backgroundColor: '#FFFFFF',
-//           textColor: '#000000',
-//         }}
-//         style={{
-//           width: '100%',
-//           height: 50,
-//           marginVertical: 30,
-//         }}
-//         onCardChange={(cardDetails) => {
-//           setCard(cardDetails);
-//         }}
-//         onFocus={(focusedField) => {
-//           console.log('focusField', focusedField);
-//         }}
-//       />
-//         <Button
-//           style={styles.button}
-//           disabled={!loading}
-//           title="Checkout"
-//           color="#841584"
-//           onPress={openPaymentSheet}
-//         />
-//         </View>
-//   )
-// }
-
-// export default App;
-// const styles = StyleSheet.create({
-//   container: {
-//      flex: 1,
-//      padding: 20,
-//      marginHorizontal: 10,
-//      marginVertical: 10,
-//   },
-//   button: {
-//      backgroundColor: '#00aeef',
-//      borderColor: 'red',
-//      borderWidth: 5,
-//      borderRadius: 15       
-//   }
-// })
