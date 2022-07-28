@@ -19,6 +19,7 @@
     "react": "17.0.2",
     "react-native": "0.68.2",
     "react-native-push-notification": "^8.1.1",
+    "react-native-vector-icons": "^9.2.0",
     "react-navigation": "^4.4.4",
     "react-redux": "^8.0.1",
     "redux": "^4.2.0",
@@ -38,5 +39,10 @@
   },
   "jest": {
     "preset": "react-native"
+  },
+  "rnpm": {
+    "assets": [
+      "./assets/fonts"
+    ]
   }
 }
