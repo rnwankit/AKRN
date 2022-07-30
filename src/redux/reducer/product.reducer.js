@@ -7,7 +7,7 @@ const initVal = {
 }
 
 export const productReducer = (state=initVal, action) => {
-    console.log(state, action);
+    console.log("zzzzzzzzzzz", state, action.type);
     switch(action.type) {
         case ActionTypes.LOADING_PRODUCT:
             return {
@@ -16,7 +16,7 @@ export const productReducer = (state=initVal, action) => {
                 isLoading: true,
                 error: ''
             }
-        case ActionTypes.GET_PRODUCT:
+        case ActionTypes.RETRIEVED_PRODUCT:
             return {
                 ...state,
                 product: action.payload,
